@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RegisResource;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
 
 class RegisController extends Controller
 {
@@ -22,7 +19,7 @@ class RegisController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
-                    'errors' => $validateUser->errors()
+                    'errors' => $validateUser->errors(),
                 ], 401);
             }
 
@@ -31,15 +28,17 @@ class RegisController extends Controller
             $user = User::create($data);
             $user->sendEmailVerificationNotification();
 
+            $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
                 'status' => true,
-                'message' => 'User Created',
-                'token' => $user->createToken("Token Api")->plainTextToken
+                'message' => 'Logged In Successfully',
+                'access_token' => $token,
+                'token_type' => 'Bearer',
             ], 200);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }

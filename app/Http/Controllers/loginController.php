@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Resources\RegisResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class loginController extends Controller
 {
- //
+    //
     /**
      * Create User
      * @param Request $request
@@ -24,7 +22,7 @@ class loginController extends Controller
                 $request->all(),
                 [
                     'email' => 'required|email',
-                    'password' => 'required'
+                    'password' => 'required',
                 ]
             );
 
@@ -32,7 +30,7 @@ class loginController extends Controller
                 return response()->json([
                     'status' => false,
                     'message' => 'validation error',
-                    'errors' => $validateUser->errors()
+                    'errors' => $validateUser->errors(),
                 ], 401);
             }
 
@@ -48,18 +46,20 @@ class loginController extends Controller
             if (!$user->hasVerifiedEmail()) {
                 return response()->json([
                     'status' => false,
-                    "message" => "!! Email has not been verified !!"
+                    "message" => "!! Email has not been verified !!",
                 ], 400);
             }
+            $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
                 'status' => true,
                 'message' => 'Logged In Successfully',
-                'token' => $user->createToken("Token Api")->plainTextToken
+                'access_token' => $token,
+                'token_type' => 'Bearer',
             ], 200);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return response()->json([
                 'status' => false,
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -73,10 +73,10 @@ class loginController extends Controller
                 'status' => true,
                 'message' => 'Logged Out Successfully',
             ], 200);
-        } catch (\Throwable $p) {
+        } catch (\Throwable$p) {
             return response()->json([
                 'status' => false,
-                'message' => $p->getMessage()
+                'message' => $p->getMessage(),
             ], 500);
         }
     }

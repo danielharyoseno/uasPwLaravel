@@ -35,13 +35,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //logout
     Route::get('/logout', [loginController::class, 'logout']);
 
-});
+    //pengumuman
+    Route::get('announcement', 'Api\AnnouncementController@index');
+    Route::get('announcement/{id}', 'Api\AnnouncementController@show');
+    Route::post('announcement', 'Api\AnnouncementController@store');
+    Route::put('announcement/{id}', 'Api\AnnouncementController@update');
+    Route::delete('announcement/{id}', 'Api\AnnouncementController@destroy');
 
-Route::group(['middleware' => 'auth:api'], function () {
-//pengumuman
-    Route::get('pengumuman', 'Api\PengumumanController@index');
-    Route::get('pengumuman/{id}', 'Api\PengumumanController@show');
-    Route::post('pengumuman', 'Api\PengumumanController@store');
-    Route::put('pengumuman/{id}', 'Api\PengumumanController@update');
-    Route::delete('pengumuman/{id}', 'Api\PengumumanController@destroy');
 });

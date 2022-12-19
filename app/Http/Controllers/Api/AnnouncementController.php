@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pengumuman;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Validator;
 
-class PengumumanController extends Controller
+class AnnouncementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,12 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        $pengumumans = Pengumuman::all();
+        $announcements = Announcement::all();
 
-        if (count($pengumans) > 0) {
+        if (count($announcements) > 0) {
             return response([
                 'message' => 'Retrieve All Success',
-                'data' => $pengumans,
+                'data' => $announcements,
             ], 200);
         }
 
@@ -29,6 +29,16 @@ class PengumumanController extends Controller
             'message' => 'Empty',
             'data' => null,
         ], 400);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -49,10 +59,10 @@ class PengumumanController extends Controller
             return response(['message' => $validate->errors()], 400);
         }
 
-        $pengumuman = Pengumuman::create($storeData);
+        $announcements = Announcement::create($storeData);
         return response([
             'message' => 'Add pengumuman Success',
-            'data' => $pengumuman,
+            'data' => $announcements,
         ], 200);
     }
 
@@ -64,12 +74,12 @@ class PengumumanController extends Controller
      */
     public function show($id)
     {
-        $pengumuman = Pengumuman::find($id);
+        $announcement = Announcement::find($id);
 
-        if (!is_null($pengumuman)) {
+        if (!is_null($announcement)) {
             return response([
                 'message' => 'Retrieve pengumuman Success',
-                'data' => $pengumuman,
+                'data' => $announcement,
             ], 200);
         }
 
@@ -77,6 +87,17 @@ class PengumumanController extends Controller
             'message' => 'pengumuman Not Found',
             'data' => null,
         ], 404);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+
     }
 
     /**
@@ -88,10 +109,10 @@ class PengumumanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $pengumuman = Pengumuman::find($id);
-        if (is_null($pengumuman)) {
+        $announcement = Announcement::find($id);
+        if (is_null($announcement)) {
             return response([
-                'message' => 'pengumuman Not Found',
+                'message' => 'announcement Not Found',
                 'data' => null,
             ], 404);
         }
@@ -106,13 +127,13 @@ class PengumumanController extends Controller
             return response(['message' => $validate->errors()], 400);
         }
 
-        $pengumuman->headline = $updateData['headline'];
-        $pengumuman->isi = $updateData['isi'];
+        $announcement->headline = $updateData['headline'];
+        $announcement->isi = $updateData['isi'];
 
-        if ($pengumuman->save()) {
+        if ($announcement->save()) {
             return response([
                 'message' => 'Update pengumuman Success',
-                'data' => $pengumuman,
+                'data' => $announcement,
             ], 200);
         }
 
@@ -130,24 +151,24 @@ class PengumumanController extends Controller
      */
     public function destroy($id)
     {
-        $pengumuman = Pengumuman::find($id);
+        $announcement = Announcement::find($id);
 
-        if (is_null($pengumuman)) {
+        if (is_null($announcement)) {
             return response([
-                'message' => 'pengumuman Not Found',
+                'message' => 'announcement Not Found',
                 'data' => null,
             ], 404);
         }
 
-        if ($pengumuman->delete()) {
+        if ($announcement->delete()) {
             return response([
-                'message' => 'Delete pengumuman Success',
-                'data' => $pengumuman,
+                'message' => 'Delete announcement Success',
+                'data' => $announcement,
             ], 200);
         }
 
         return response([
-            'message' => 'Delete pengumuman Failed',
+            'message' => 'Delete announcement Failed',
             'data' => null,
         ], 400);
     }
