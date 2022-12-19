@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\emailVerifController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\loginController;
+use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\RegisController;
 use App\Http\Controllers\UserController;
+use App\Models\Organizer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +25,13 @@ Route::post('/login', [loginController::class, 'login'])->name('login');
 
 Route::get('email/verify/{id}', [emailVerifController::class, 'verify'])->name('verification.verify');
 Route::get('email/resend', [emailVerifController::class, 'resend'])->name('verification.resend');
+
+//Organizer
+Route::get('organizer', [OrganizerController::class, 'index']);
+Route::get('organizer/{id}', [OrganizerController::class, 'show']);
+Route::post('organizer', [OrganizerController::class, 'store']);
+Route::put('organizer/{id}', [OrganizerController::class, 'update']);
+Route::delete('organizer/{id}', [OrganizerController::class, 'delete']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
