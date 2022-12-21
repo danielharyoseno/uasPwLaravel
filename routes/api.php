@@ -27,11 +27,11 @@ Route::get('email/verify/{id}', [emailVerifController::class, 'verify'])->name('
 Route::get('email/resend', [emailVerifController::class, 'resend'])->name('verification.resend');
 
 //Organizer
-Route::get('organizer', [OrganizerController::class, 'index']);
-Route::get('organizer/{id}', [OrganizerController::class, 'show']);
-Route::post('organizer', [OrganizerController::class, 'store']);
-Route::put('organizer/{id}', [OrganizerController::class, 'update']);
-Route::delete('organizer/{id}', [OrganizerController::class, 'delete']);
+Route::get('organizer', 'Api\OrganizerController@index');
+Route::get('organizer/{id}', 'Api\OrganizerController@show');
+Route::post('organizer', 'Api\OrganizerController@store');
+Route::put('organizer/{id}', 'Api\OrganizerController@update');
+Route::delete('organizer/{id}', 'Api\OrganizerController@destroy');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
@@ -51,5 +51,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('announcement', 'Api\AnnouncementController@store');
     Route::put('announcement/{id}', 'Api\AnnouncementController@update');
     Route::delete('announcement/{id}', 'Api\AnnouncementController@destroy');
+
+    //Organizer
+    Route::get('organizer', 'Api\OrganizerController@index');
+    Route::get('organizer/{id}', 'Api\OrganizerController@show');
+    Route::post('organizer', 'Api\OrganizerController@store');
+    Route::put('organizer/{id}', 'Api\OrganizerController@update');
+    Route::delete('organizer/{id}', 'Api\OrganizerController@destroy');
 
 });
