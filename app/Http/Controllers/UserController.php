@@ -19,9 +19,17 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(Request $request, $id)
     {
         $user = auth()->user();
+
+        $user = User::find($id);
+        if(is_null($user)){
+            return response([
+                'message' => 'User Not Found',
+                'data' => null
+            ],404);
+        }
 
         $data = $request->all();
         $validate = Validator::make($data, [
@@ -37,8 +45,6 @@ class UserController extends Controller
                 'data' => $validate->errors()
             ], 400);
         }
-
-        $user = User::find($user->id);
         $user->update($data);
         $user->save();
 
