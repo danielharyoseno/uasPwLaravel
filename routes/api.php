@@ -53,10 +53,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('announcement/{id}', 'Api\AnnouncementController@destroy');
 
     //Organizer
-    Route::get('organizer', 'Api\OrganizerController@index');
-    Route::get('organizer/{id}', 'Api\OrganizerController@show');
-    Route::post('organizer', 'Api\OrganizerController@store');
-    Route::put('organizer/{id}', 'Api\OrganizerController@update');
-    Route::delete('organizer/{id}', 'Api\OrganizerController@destroy');
-
+    Route::get('organizer', [OrganizerController::class, 'index']);
+    Route::get('organizer/{id}', [OrganizerController::class, 'show']);
+    Route::post('organizer', [OrganizerController::class, 'store']);
+    Route::put('organizer/{id}', [OrganizerController::class, 'update']);
+    Route::delete('organizer/{id}', [OrganizerController::class, 'destroy']);
 });
