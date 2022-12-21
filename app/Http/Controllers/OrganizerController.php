@@ -36,7 +36,7 @@ class OrganizerController extends Controller
         }
 
         return response()->json([
-            'message'   => 'Event Not Found',
+            'message'   => 'Organizer Not Found',
             'data'      => null
         ], 404);
     }
