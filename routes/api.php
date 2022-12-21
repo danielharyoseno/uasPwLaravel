@@ -6,7 +6,6 @@ use App\Http\Controllers\loginController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\RegisController;
 use App\Http\Controllers\UserController;
-use App\Models\Organizer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,4 +57,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('organizer', [OrganizerController::class, 'store']);
     Route::put('organizer/{id}', [OrganizerController::class, 'update']);
     Route::delete('organizer/{id}', [OrganizerController::class, 'destroy']);
+
+    //Event
+    Route::get('event', [EventController::class, 'index']);
+    Route::get('event/{id}', [EventController::class, 'show']);
+    Route::post('event', [EventController::class, 'store']);
+    Route::put('event/{id}', [EventController::class, 'update']);
+    Route::delete('event/{id}', [EventController::class, 'destroy']);
 });
